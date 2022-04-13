@@ -27,7 +27,6 @@ def get_trial_time_and_label(monkey, event_want='GO-ON'):
             valid_trial = False
         if event[:5] in ['TS-ON', 'NONE ']:
             if valid_trial and lb_trial:
-                print(t_trial, lb_trial)
                 samples.append((t_trial, lb_trial))
             t_trial = None
             lb_trial = None
