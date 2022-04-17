@@ -37,6 +37,7 @@ def get_trial_time_and_label(monkey, event_want='GO-ON'):
 
 def get_electrodes (monkey_name, x, y, step):
     chunk_channel_id=[]
+    assert monkey_name in ['L', 'N']
     if monkey_name=='L':
         df=pd.read_csv(electrodeID_path+'L.csv')
     else:
