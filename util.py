@@ -40,7 +40,7 @@ def get_electrodes (monkey_name, x, y, step):
     if monkey_name=='L':
         df=pd.read_csv(electrodeID_path+'L.csv')
     else:
-        df=pd.read_csv(electrodeID_path+'N1.csv')   
+        df=pd.read_csv(electrodeID_path+'N.csv')   
     monkey_electrodes_id=df['Id'].tolist()
     start=(y-1)*10+x
     for col in range (0, step):
