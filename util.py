@@ -1,6 +1,8 @@
 import scipy.io as scio
+import pandas as pd
 
 data_path = "/home/melodia/data/MEA_grasp/datasets_matlab/"
+electrodeID_path='...' #path to git repo CSV files
 
 def get_trial_time_and_label(monkey, event_want='GO-ON'):
     assert monkey in ['L', 'N']
@@ -32,3 +34,17 @@ def get_trial_time_and_label(monkey, event_want='GO-ON'):
             lb_trial = None
             valid_trial = True
     return samples
+
+def get_electrodes (monkey_name, x, y, step):
+    chunk_channel_id=[]
+    if monkey_name=='L':
+        df=pd.read_csv(electrodeID_path+'L.csv')
+    else:
+        df=pd.read_csv(electrodeID_path+'N1.csv')   
+    monkey_electrodes_id=df['Id'].tolist()
+    start=(y-1)*10+x
+    for col in range (0, step):
+        for row in range (0,step):
+            chunk_channel_id.append(monkey_electrodes_id[start+10*row-1])
+        start=start+1   
+    return chunk_channel_id 
