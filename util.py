@@ -1,5 +1,7 @@
 import scipy.io as scio
+from scipy import signal
 import pandas as pd
+import numpy as np
 
 data_path = "/home/melodia/data/MEA_grasp/datasets_matlab/"
 electrodeID_path = '/home/melodia/proj/BCI_Project/metadata/' #path to git repo CSV files
