@@ -2,6 +2,7 @@ import scipy.io as scio
 from scipy import signal
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 
 data_path = "/home/melodia/data/MEA_grasp/datasets_matlab/"
 electrodeID_path = '/home/melodia/proj/BCI_Project/metadata/' #path to git repo CSV files
@@ -96,3 +97,11 @@ def get_all_feat_and_labels(monkey, event_want, offset, window_time):
     labels = np.stack([trial[1] for trial in trials])
     
     return all_feat, labels
+
+def plot_heatmap(accs, vmin=0.25, vmax=1):
+    cols, rows = accs.shape
+    plt.imshow(accs, interpolation='nearest', extent=[0.5, 0.5+cols, 0.5, 0.5+rows],
+                      cmap='bwr', vmin=vmin, vmax=vmax)
+    plt.colorbar()
+    plt.axis('off')
+    plt.show()
