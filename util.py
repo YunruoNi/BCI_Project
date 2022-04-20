@@ -20,6 +20,7 @@ def get_trial_time_and_label(monkey, event_want='GO-ON'):
     t_trial = None
     lb_trial = None
     valid_trial = True
+    valid_trial2 = False
     for event, label, time in zip(event_data['an_trial_event_labels'],
                             event_data['an_belongs_to_trialtype'],
                             event_data['times'][0]):
@@ -28,8 +29,10 @@ def get_trial_time_and_label(monkey, event_want='GO-ON'):
             lb_trial = label
         if 'ERROR' in event:
             valid_trial = False
+        if 'RW-ON' in event:
+            valid_trial2 = True
         if event[:5] in ['TS-ON', 'NONE ']:
-            if valid_trial and lb_trial:
+            if valid_trial and valid_trial2 and lb_trial:
                 samples.append((t_trial, lb_trial))
             t_trial = None
             lb_trial = None
