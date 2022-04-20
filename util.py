@@ -73,7 +73,7 @@ def get_lfp_feat(monkey, ch, start_time, window_time):
     op = int(start_time_shifted*1000)
     ed = int((start_time_shifted+window_time)*1000)
     sig = lfp_data['signal'].squeeze()[op:ed]
-    freqs, psd = signal.welch(sig, 1000, nperseg=len(sig))
+    freqs, psd = signal.welch(sig, 1000, nperseg=500)
     return psd[2:6]
 
 def get_all_feat_and_labels(monkey, event_want, offset, window_time):
