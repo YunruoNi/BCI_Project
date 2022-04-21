@@ -68,7 +68,7 @@ def get_st_feat(monkey, ch, start_time, window_time):
     st_ed = (start_time+window_time)*30000
 
     frs = []
-    parts = 10
+    parts = 1
     for i in range(parts):
         sop = st_op + (st_ed-st_op)*i/parts
         sed = st_op + (st_ed-st_op)*(i+1)/parts
@@ -85,7 +85,7 @@ def get_lfp_feat(monkey, ch, start_time, window_time):
     
     
     psds = []
-    parts = 10
+    parts = 1
     for i in range(parts):
         op = int((start_time_shifted+window_time*i/parts)*1000)
         ed = int((start_time_shifted+window_time*(i+1)/parts)*1000)
