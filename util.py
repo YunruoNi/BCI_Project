@@ -66,7 +66,15 @@ def get_st_feat(monkey, ch, start_time, window_time):
     st['times'][0]
     st_op = start_time*30000
     st_ed = (start_time+window_time)*30000
-    return ((st['times'][0] >= st_op) & (st['times'][0] < st_ed)).sum()
+
+    frs = []
+    parts = 5
+    for i in range(parts):
+        sop = st_op + (st_ed-st_op)*i/parts
+        sed = st_op + (st_ed-st_op)*(i+1)/parts
+        frs.append(((st['times'][0] >= sop) & (st['times'][0] < sed)).sum())
+    # return [((st['times'][0] >= st_op) & (st['times'][0] < st_ed)).sum()]
+    return frs
 
 def get_lfp_feat(monkey, ch, start_time, window_time):
     data = all_data[monkey][ch]
@@ -74,11 +82,17 @@ def get_lfp_feat(monkey, ch, start_time, window_time):
     assert lfp_data['file_origin'][0][-3:] == 'ns2'
     assert lfp_data['t_start_units'] == '(1.0/1000.0*s)'
     start_time_shifted = start_time - lfp_data['t_start'].item()
-    op = int(start_time_shifted*1000)
-    ed = int((start_time_shifted+window_time)*1000)
-    sig = lfp_data['signal'].squeeze()[op:ed]
-    freqs, psd = signal.welch(sig, 1000, nperseg=500)
-    return psd[2:6]
+    
+    
+    psds = []
+    parts = 10
+    for i in range(parts):
+        op = int(start_time_shifted*1000)
+        ed = int((start_time_shifted+window_time)*1000)
+        sig = lfp_data['signal'].squeeze()[op:ed]
+        freqs, psd = signal.welch(sig, 1000, nperseg=500)
+        psds.append(psd[:])
+    return np.concatenate(psds)
 
 def get_all_feat_and_labels(monkey, event_want, offset, window_time):
     trials = get_trial_time_and_label(monkey, event_want)
