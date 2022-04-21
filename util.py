@@ -68,7 +68,7 @@ def get_st_feat(monkey, ch, start_time, window_time):
     st_ed = (start_time+window_time)*30000
 
     frs = []
-    parts = 5
+    parts = 10
     for i in range(parts):
         sop = st_op + (st_ed-st_op)*i/parts
         sed = st_op + (st_ed-st_op)*(i+1)/parts
@@ -87,8 +87,8 @@ def get_lfp_feat(monkey, ch, start_time, window_time):
     psds = []
     parts = 10
     for i in range(parts):
-        op = int(start_time_shifted*1000)
-        ed = int((start_time_shifted+window_time)*1000)
+        op = int((start_time_shifted+window_time*i/parts)*1000)
+        ed = int((start_time_shifted+window_time*(i+1)/parts)*1000)
         sig = lfp_data['signal'].squeeze()[op:ed]
         freqs, psd = signal.welch(sig, 1000, nperseg=500)
         psds.append(psd[:])
